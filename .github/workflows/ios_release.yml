@@ -1,0 +1,22 @@
+name: iOS Release
+on:
+  push:
+    branches: ["main"]
+jobs:
+  deploy:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: "stable"
+      - run: flutter pub get
+      # build IPA (iOS)
+      - run: flutter build ipa --release --no-codesign
+      # upload to App Store using Fastlane
+      - name: Release to App Store
+        run: bundle exec fastlane ios release
+        env:
+          APP_STORE_CONNECT_API_KEY: ${{ secrets.APP_STORE_CONNECT_API_KEY }}
+          APP_STORE_CONNECT_API_KEY_ID: ${{ secrets.APP_STORE_CONNECT_API_KEY_ID }}
+          APP_STORE_CONNECT_API_ISSUER_ID: ${{ secrets.APP_STORE_CONNECT_API_ISSUER_ID }}
