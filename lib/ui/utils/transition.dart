@@ -1,0 +1,73 @@
+import 'package:flutter/cupertino.dart';
+import 'package:path/path.dart';
+
+mixin Transitions {
+  static const duration = Duration(milliseconds: 400);
+  Route<dynamic> slideUpAnimRoute(Widget page) {
+    return PageRouteBuilder(
+      transitionDuration: duration,
+      pageBuilder: (context, animation, secondaryAnimation) => page,
+      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+        const begin = Offset(0.0, 1.0);
+        const end = Offset.zero;
+        const curve = Curves.bounceIn;
+        var tween = Tween(
+          begin: begin,
+          end: end,
+        ).chain(CurveTween(curve: curve));
+        return SlideTransition(position: animation.drive(tween), child: child);
+      },
+    );
+  }
+
+  Route<dynamic> slideDownAnimRoute(Widget page) {
+    return PageRouteBuilder(
+      transitionDuration: duration,
+      pageBuilder: (context, animation, secondaryAnimation) => page,
+      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+        const begin = Offset(0.0, -1.0);
+        const end = Offset.zero;
+        const curve = Curves.ease;
+        var tween = Tween(
+          begin: begin,
+          end: end,
+        ).chain(CurveTween(curve: curve));
+        return SlideTransition(position: animation.drive(tween), child: child);
+      },
+    );
+  }
+
+  Route<dynamic> slideLeftAnimRoute(Widget page) {
+    return PageRouteBuilder(
+      transitionDuration: duration,
+      pageBuilder: (context, animation, secondaryAnimation) => page,
+      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+        const begin = Offset(1.0, 0.0);
+        const end = Offset.zero;
+        const curve = Curves.ease;
+        var tween = Tween(
+          begin: begin,
+          end: end,
+        ).chain(CurveTween(curve: curve));
+        return SlideTransition(position: animation.drive(tween), child: child);
+      },
+    );
+  }
+
+  Route<dynamic> slideRightAnimRoute(Widget page) {
+    return PageRouteBuilder(
+      transitionDuration: duration,
+      pageBuilder: (context, animation, secondaryAnimation) => page,
+      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+        const begin = Offset(-1.0, 0.0);
+        const end = Offset.zero;
+        const curve = Curves.ease;
+        var tween = Tween(
+          begin: begin,
+          end: end,
+        ).chain(CurveTween(curve: curve));
+        return SlideTransition(position: animation.drive(tween), child: child);
+      },
+    );
+  }
+}
